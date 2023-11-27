@@ -1,0 +1,26 @@
+pkgname=pbc
+pkgver=0.5.14
+pkgrel=1
+pkgdesc='The Pairing-Based Cryptography Library'
+url="https://crypto.stanford.edu/pbc/"
+arch=('x86_64')
+license=('GPL2')
+depends=('gmp')
+makedepends=('autoconf')
+optdepends=()
+conflicts=()
+provides=(pbc)
+source=("https://crypto.stanford.edu/pbc/files/pbc-${pkgver}.tar.gz")
+md5sums=('SKIP')
+options=('staticlibs')
+
+build() {
+  cd "pbc-${pkgver}"
+  ./configure --prefix=/usr
+  make -j`nproc`
+}
+
+package() {
+  cd "pbc-${pkgver}"
+  DESTDIR="$pkgdir" make install
+}
